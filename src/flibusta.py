@@ -90,8 +90,26 @@ class FlibustaStore(StorePlugin):
                 s.formats = ', '.join(s.downloads.keys()).strip()
 
                 s.title = ' '.join(data.xpath('./*[local-name() = "title"]//text()')).strip()
+
+                if True:
+                    parts = (''.join(data.xpath('./*[local-name() = "content"]//text()'))).split('<br/>Перевод: ')
+
+                    if len(parts) > 1:
+                        s.title = s.title + ' (Пер. ' + parts[1].split('<br/>')[0] + ')'
+
                 s.author = ', '.join(data.xpath('./*[local-name() = "author"]//*[local-name() = "name"]//text()')).strip()
+
+                if True:
+                    parts = (''.join(data.xpath('./*[local-name() = "content"]//text()'))).split('<br/>Год издания: ')
+
+                    if len(parts) > 1:
+                        s.author = '[' + parts[1].split('<br/>')[0] + '] ' + s.author
+
                 s.price = '$0.00'
+
+                if True:
+                    s.price = '$' + (''.join(data.xpath('./*[local-name() = "content"]//text()'))).split('<br/>Скачиваний: ')[1].split('<br/>')[0] + '.00'
+
                 s.drm = SearchResult.DRM_UNLOCKED
 
                 yield s
