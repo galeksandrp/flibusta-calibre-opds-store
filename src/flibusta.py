@@ -91,7 +91,7 @@ class FlibustaStore(StorePlugin):
 
                 s.title = ' '.join(data.xpath('./*[local-name() = "title"]//text()')).strip()
                 s.author = ', '.join(data.xpath('./*[local-name() = "author"]//*[local-name() = "name"]//text()')).strip()
-                s.price = '$0.00'
+                s.price = '$' + (''.join(data.xpath('./*[local-name() = "content"]//text()'))).split('&lt;br/&gt;Скачиваний: ')[1].split('&lt;br/&gt;')[0] + '.00'
                 s.drm = SearchResult.DRM_UNLOCKED
 
                 yield s
